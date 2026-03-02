@@ -1,4 +1,4 @@
-# Test: Interactive analysis reports
+# SYM project
 
 Password-protected multi-report site deployed on GitHub Pages via [StatiCrypt](https://github.com/robinmoisson/staticrypt).
 
@@ -11,7 +11,7 @@ Password-protected multi-report site deployed on GitHub Pages via [StatiCrypt](h
 ```bash
 chmod +x deploy.sh    # first time only
 
-./deploy.sh <report-slug> /path/to/report.html
+./deploy.sh  /path/to/report.html
 ```
 
 The script will:
@@ -33,6 +33,35 @@ The script will:
 
 All pages are encrypted with the same password and shared salt (`.staticrypt-salt`).
 Entering the password once on any page remembers it for **7 days** across the whole site.
+
+---
+
+## Salt — how it works
+
+The `.staticrypt-salt` file contains a **random 32-character hex string** (128-bit) generated once and committed to the repo.
+
+- It is shared across **all pages of this site** so the "Remember me" cookie works everywhere after a single login
+- It is **not secret** — its only role is to make password hashes unique to this site
+- **Never delete or regenerate it** unless you intend to invalidate all existing user sessions
+
+### Generate a new salt (first-time or reset)
+
+```bash
+node -e "console.log(require('crypto').randomBytes(16).toString('hex'))" > .staticrypt-salt
+```
+
+> ⚠️ Regenerating the salt will force **all users to re-enter the password**, even if they had "Remember me" active.
+
+### Deploying a second / separate website
+
+Each independent site should have its **own** `.staticrypt-salt` file. Never share a salt across different sites.
+
+```bash
+# In the new repo:
+node -e "console.log(require('crypto').randomBytes(16).toString('hex'))" > .staticrypt-salt
+```
+
+Then copy and adapt `deploy.sh` (update the GitHub Pages URL and any branding in the `--template-*` flags).
 
 ---
 

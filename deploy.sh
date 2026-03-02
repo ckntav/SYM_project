@@ -90,7 +90,7 @@ encrypt_to() {
     --template-instructions "Enter the password provided by Christophe Tav" \
     --template-color-primary   "#047857" \
     --template-color-secondary "#f0fdf4" \
-    --template-button "Access reports"
+    --template-button "Unlock"
   rm -rf "$tmp"
 }
 
