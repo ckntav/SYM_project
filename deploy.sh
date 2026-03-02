@@ -86,9 +86,11 @@ encrypt_to() {
     -d         "$out_dir" \
     --short \
     --remember 7 \
+    --template-title "Restricted access" \
+    --template-instructions "Enter the password provided by Christophe Tav" \
     --template-color-primary   "#047857" \
     --template-color-secondary "#f0fdf4" \
-    --template-button "Unlock"
+    --template-button "Access reports"
   rm -rf "$tmp"
 }
 
@@ -117,4 +119,4 @@ git push origin main
 
 echo ""
 echo "✓  Deployed to:"
-echo "   https://ckntav.github.io/20260227_test_encrypt_dataviz/"
+echo "   https://ckntav.github.io/SYM_project/"
